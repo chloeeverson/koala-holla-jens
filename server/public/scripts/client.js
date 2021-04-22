@@ -53,6 +53,25 @@ function getKoalas(){
 
 function saveKoala( newKoala ){
   console.log( 'in saveKoala', newKoala );
-  // ajax call to server to get koalas
- 
+  // ajax call to server to POST koalas
+  let koalaToSend = {
+    name: $('#nameIn').val(),
+    age: $('#ageIn').val(),
+    gender: $('#genderIn').val(),
+    readyForTransfer: $('#readyForTransferIn').val(),
+    notes: $('#notesIn').val(),
+  }
+  $.ajax({
+      type: 'POST',
+      url: '/koalas',
+      data: koalaToSend
+}).then( function (response) {
+      $('#nameIn').val(''),
+      $('#ageIn').val(''),
+      $('#genderIn').val(''),
+      $('#readyForTransferIn').val(''),
+      $('#notesIn').val(''),
+    getKoalas();
+  });
+
 }
