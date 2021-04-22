@@ -14,7 +14,6 @@
     "express": "^4.17.1",
     "pg": "^8.6.0"
   },
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/chloeeverson/koala-holla-jens.git"
