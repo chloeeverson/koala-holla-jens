@@ -31,7 +31,7 @@ router.post('/', (req, res) => {
         req.body.name,        // $1
         req.body.gender,         // $2
         req.body.age,     // $3
-        req.body.readyForTransfer, //$4
+        req.body.ready_to_transfer, //$4
         req.body.notes           // $5
     ];
     // console.log('query string is: ', queryString);

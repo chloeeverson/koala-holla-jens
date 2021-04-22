@@ -37,6 +37,7 @@ function getKoalas() {
     url: '/koalas'
   }).then(function (response) {
     console.log('Getting response', response);
+    renderKoalas(response);
   })
 } // end getKoalas
 
@@ -47,9 +48,9 @@ function renderKoalas(response) {
       <td>${response[i].name}</td>
       <td>${response[i].age}</td>
       <td>${response[i].gender}</td>
-      <td>${response[i].readyForTransfer}</td>
+      <td>${response[i].ready_to_transfer}</td>
       <td>${response[i].notes}</td>
-      <button class="readyButton" data-id={response[i].id}">Mark As Ready</button>
+      <td><button class="readyButton" data-id={response[i].id}">Mark As Ready</button></td>
     </tr>
     `);
   }
