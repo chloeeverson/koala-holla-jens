@@ -1,5 +1,5 @@
 const express = require('express');
-const koalaRouter = express.Router();
+const router = express.Router();
 
 // DB CONNECTION
 const pool = require('../modules/pool.js')
@@ -31,7 +31,7 @@ router.post('/', (req, res) => {
         req.body.name,        // $1
         req.body.gender,         // $2
         req.body.age,     // $3
-        req.body.ready_to_transfer, //$4
+        req.body.readyForTransfer, //$4
         req.body.notes           // $5
     ];
     // console.log('query string is: ', queryString);
@@ -55,11 +55,26 @@ router.put('/koalas/ready_to_transfer/:id', (req, res) => {
         .then((resDB) => {
             res.sendStatus(200);
         }).catch((error) => {
-            // console.log(error);
+            console.log(error);
             res.sendStatus(500);
         });
 });
 
 // DELETE
+router.delete('/koalas/:id', (req, res) => {
+    let reqId = req.params.id;
+    // console.log('Delete request id', reqId);
 
-module.exports = koalaRouter;
+    let sqlText = 'DELETE FROM "koalas" WHERE "id"=$1;';
+    pool.query(sqlText, [reqId])
+        .then((result) => {
+            console.log('Koala ANNHILATED');
+            res.sendStatus(200);
+        })
+        .catch((error) => {
+            // Use a good error message to help out your future self.
+            console.log(`Error making database query ${sqlText}`, error);
+            res.sendStatus(500); // Server always responds.
+        });
+});
+module.exports = router;
