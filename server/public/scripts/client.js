@@ -47,24 +47,32 @@ function getKoalas() {
 
 function renderKoalas(response) {
   for (let i = 0; i < response.length; i++) {
-    // if (response[i].ready_to_transfer = true) {
-    //   response[i].ready_to_transfer = 'T';
-    // } else {
-    //   response[i].ready_to_transfer = 'F';
-    // }
-    $('#viewKoalas').append(`
-    <tr>
-      <td>${response[i].name}</td>
-      <td>${response[i].age}</td>
-      <td>${response[i].gender}</td>
-      <td>${response[i].ready_to_transfer}</td>
-      <td>${response[i].notes}</td>
-
-      <td><button class="readyButton" data-id=${response[i].id}>Mark As Ready</button></td>
-      <td><button class="deleteButton" data-id=${response[i].id}>Delete</button></td>
-
-    </tr>
-    `);
+    if (response[i].ready_to_transfer == true) {
+      $('#viewKoalas').append(`
+      <tr>
+        <td>${response[i].name}</td>
+        <td>${response[i].age}</td>
+        <td>${response[i].gender}</td>
+        <td>${response[i].ready_to_transfer}</td>
+        <td>${response[i].notes}</td>
+        <td> </td>
+        <td><button class="deleteButton" data-id=${response[i].id}>Delete</button></td>
+      </tr>
+      `);
+    } else {
+       $('#viewKoalas').append(`
+       <tr>
+         <td>${response[i].name}</td>
+         <td>${response[i].age}</td>
+         <td>${response[i].gender}</td>
+         <td>${response[i].ready_to_transfer}</td>
+         <td>${response[i].notes}</td>
+         <td><button class="readyButton" data-id=${response[i].id}>Mark As Ready</button></td>
+         <td><button class="deleteButton" data-id=${response[i].id}>Delete</button></td>
+       </tr>
+       `);
+   }
+   
   }
 }//end renderKoalas
 
@@ -123,7 +131,6 @@ function deleteKoala(koalaId) {
     url: `/koalas/${koalaId}`,
   })
     .then(function (response) {
-      // Refresh the music list
       getKoalas();
     })
     .catch(function (error) {
