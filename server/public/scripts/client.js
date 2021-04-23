@@ -27,6 +27,9 @@ function setupClickListeners() {
     saveKoala(koalaToSend);
   });
   $('#viewKoalas').on('click', '.readyButton', readyKoalaHandler);
+
+  $('#viewKoalas').on('click', '.deleteButton', deleteKoalaHandler);
+
 }
 
 function getKoalas() {
@@ -44,6 +47,11 @@ function getKoalas() {
 
 function renderKoalas(response) {
   for (let i = 0; i < response.length; i++) {
+    // if (response[i].ready_to_transfer = true) {
+    //   response[i].ready_to_transfer = 'T';
+    // } else {
+    //   response[i].ready_to_transfer = 'F';
+    // }
     $('#viewKoalas').append(`
     <tr>
       <td>${response[i].name}</td>
@@ -51,7 +59,10 @@ function renderKoalas(response) {
       <td>${response[i].gender}</td>
       <td>${response[i].ready_to_transfer}</td>
       <td>${response[i].notes}</td>
-      <td><button class="readyButton" data-id="${response[i].id}">Mark As Ready</button></td>
+
+      <td><button class="readyButton" data-id=${response[i].id}>Mark As Ready</button></td>
+      <td><button class="deleteButton" data-id=${response[i].id}>Delete</button></td>
+
     </tr>
     `);
   }
@@ -84,8 +95,8 @@ function saveKoala(newKoala) {
 }
 
 function readyKoalaHandler() {
-  // console.log('in ready koala handler');
-  
+
+  console.log('clicked');
   readyKoalas($(this).data("id"));
 }
 
@@ -100,4 +111,22 @@ function readyKoalas(readyId) {
     .catch(function (error) {
       alert('error on put route client', error);
     })
+}
+
+function deleteKoalaHandler() {
+  deleteKoala($(this).data("id"))
+}
+
+function deleteKoala(koalaId) {
+  $.ajax({
+    method: 'DELETE',
+    url: `/koalas/${koalaId}`,
+  })
+    .then(function (response) {
+      // Refresh the music list
+      getKoalas();
+    })
+    .catch(function (error) {
+      alert('Error on deleting song.', error);
+    });
 }
