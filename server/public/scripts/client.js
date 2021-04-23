@@ -6,7 +6,8 @@ $(document).ready(function () {
   setupClickListeners()
   // load existing koalas on page load
   getKoalas();
-
+  
+  
 }); // end doc ready
 
 function setupClickListeners() {
@@ -24,8 +25,8 @@ function setupClickListeners() {
     };
     // call saveKoala with the new obejct
     saveKoala(koalaToSend);
-    $('#viewKoalas').on('click', '.ready-koala', readyKoalaHandler);
   });
+  $('#viewKoalas').on('click', '.readyButton', readyKoalaHandler);
 }
 
 function getKoalas() {
@@ -50,7 +51,7 @@ function renderKoalas(response) {
       <td>${response[i].gender}</td>
       <td>${response[i].ready_to_transfer}</td>
       <td>${response[i].notes}</td>
-      <td><button class="readyButton" data-id={response[i].id}">Mark As Ready</button></td>
+      <td><button class="readyButton" data-id="${response[i].id}">Mark As Ready</button></td>
     </tr>
     `);
   }
@@ -83,7 +84,9 @@ function saveKoala(newKoala) {
 }
 
 function readyKoalaHandler() {
-  readyKoala($(this).data("id"));
+  // console.log('in ready koala handler');
+  
+  readyKoalas($(this).data("id"));
 }
 
 function readyKoalas(readyId) {
