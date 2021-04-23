@@ -6,7 +6,7 @@ const pool = require('../modules/pool.js')
 
 // GET
 router.get('/', (req, res) => {
-    pool.query('SELECT * FROM "koalas";')
+    pool.query('SELECT * FROM "koalas" ORDER BY "id";')
         .then(function (dbRes) {
             res.send(dbRes.rows);
         })
@@ -48,9 +48,11 @@ router.post('/', (req, res) => {
 });
 
 // PUT
-router.put('/koalas/ready_to_transfer/:id', (req, res) => {
+router.put('/:id', (req, res) => {
     let koalaId = req.params.id;
     let sqlText = `UPDATE "koalas" SET "ready_to_transfer"='TRUE' WHERE "id"=$1`;
+    // console.log('setting up query text for put');
+    
     pool.query(sqlText, [koalaId])
         .then((resDB) => {
             res.sendStatus(200);
@@ -61,7 +63,7 @@ router.put('/koalas/ready_to_transfer/:id', (req, res) => {
 });
 
 // DELETE
-router.delete('/koalas/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
     let reqId = req.params.id;
     // console.log('Delete request id', reqId);
 
